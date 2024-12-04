@@ -7,12 +7,11 @@ FROM golang:1.22.0 AS base
   COPY *.go .
 
 # Основной слой (build) для сборки приложения.
-# Копирует установленные зависимости и выполняет go mod tidy, чтобы обновить зависимости.
 FROM base AS build
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /parcel
 
 # В финальном этапе scratch бинарные файлы, собранные на предыдущем этапе,
-# копируются в файловую систему нового этапа
+# копируются в файловую систему нового этапа. Также копируется база данных
 FROM scratch
 COPY tracker.db .
 COPY --from=build /parcel .
