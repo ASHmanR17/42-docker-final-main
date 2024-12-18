@@ -3,7 +3,7 @@
 FROM golang:1.22.0 AS base
 WORKDIR /src
 COPY go.mod go.sum ./
-RUN go mod download \
+RUN go mod download
 COPY *.go .
 
 # Основной слой (build) для сборки приложения.
