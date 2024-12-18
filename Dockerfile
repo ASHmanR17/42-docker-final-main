@@ -1,10 +1,10 @@
 # Базовый слой (base) для установки зависимостей
 # Устанавливает зависимости с помощью go mod download.
 FROM golang:1.22.0 AS base
-  WORKDIR /src
-  COPY go.mod go.sum .
-  RUN go mod download
-  COPY *.go .
+WORKDIR /src
+COPY go.mod go.sum ./
+RUN go mod download \
+COPY *.go .
 
 # Основной слой (build) для сборки приложения.
 FROM base AS build
